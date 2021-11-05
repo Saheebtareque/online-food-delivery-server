@@ -1,9 +1,10 @@
 const express = require('express');
 const { MongoClient } = require('mongodb');
+const ObjectId = require('mongodb').ObjectId;
 require('dotenv').config();
 const cors = require('cors');
 const app = express();
-const port = 5000;
+const port = process.env.PORT ||  5000;
 
 // middleware
 app.use(cors());
@@ -26,7 +27,16 @@ async function run() {
           const meals = await cursor.toArray();
           res.send(meals);
 
-      })
+      });
+
+       // GET Single Service
+       app.get('/meals/:id', async (req, res) => {
+        const id = req.params.id;
+        console.log('getting specific service', id);
+        const query = { _id: ObjectId(id) };
+        const service = await mealsInfo.findOne(query);
+        res.json(service);
+    })
      
       //post api
       app.post('/meals',async(req,res)=>
