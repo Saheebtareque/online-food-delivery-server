@@ -19,6 +19,7 @@ async function run() {
 
       const meals = client.db("meals");
       const mealsInfo = meals.collection("mealsInfo");
+      const orderedMeals = meals.collection("orderedMeals");
 
       //Get api
       app.get('/meals',async(req,res)=>{
@@ -47,6 +48,20 @@ async function run() {
           console.log(result);
           res.json(result);
       });
+
+
+      
+      //post api
+      app.post('/orderedmeals',async(req,res)=>
+      {
+          const mealInfo = req.body;
+          console.log('hitting the ordered post',mealInfo);
+          const result = await orderedMeals.insertOne(mealInfo);
+          console.log(result);
+          res.json(result);
+      });
+
+
 
     } finally {
     //   await client.close();
