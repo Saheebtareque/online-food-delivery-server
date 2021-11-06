@@ -6,7 +6,7 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT ||  5000;
 
-// middleware
+// middlewaree
 app.use(cors());
 app.use(express.json());
 
@@ -37,7 +37,7 @@ async function run() {
         const query = { _id: ObjectId(id) };
         const service = await mealsInfo.findOne(query);
         res.json(service);
-    })
+    });
      
       //post api
       app.post('/meals',async(req,res)=>
@@ -48,6 +48,16 @@ async function run() {
           console.log(result);
           res.json(result);
       });
+
+
+       //Get api
+       app.get('/orderedmeals',async(req,res)=>{
+        console.log('get ordered meals');
+        const cursor = orderedMeals.find({});
+        const meals = await cursor.toArray();
+        res.send(meals);
+
+    });
 
 
       
